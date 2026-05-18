@@ -1,0 +1,24 @@
+node_modules/
+.expo/
+dist/
+*.env
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+pyvenv.cfg/
+.venv/
+.venv.cfg
+.venv.cfg.bak
+.venv.cfg.bak.1
+.venv.cfg.bak.2
+.venv.cfg.bak.3
+.venv.cfg.bak.4
+.venv.cfg.bak.5
+
+# macOS
+.DS_Store

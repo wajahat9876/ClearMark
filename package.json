@@ -1,0 +1,10 @@
+{
+  "name": "clearmark",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix client",
+    "build": "npm run build --prefix client",
+    "server": "cd server && uvicorn main:app --reload --port 8000"
+  }
+}

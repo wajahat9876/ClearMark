@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-surface text-slate-100 antialiased;
+  }
+
+  ::selection {
+    @apply bg-accent/40 text-white;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply border border-surface-border/80 bg-surface-elevated/80 backdrop-blur-xl;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-indigo-300 via-violet-300 to-fuchsia-300 bg-clip-text text-transparent;
+  }
+
+  .hero-glow {
+    background: radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      rgba(99, 102, 241, 0.35),
+      transparent
+    );
+  }
+}
