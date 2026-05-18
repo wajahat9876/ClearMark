@@ -1,4 +1,5 @@
-import { Wand2, Shield, Zap } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Mic2, Wand2, Shield, Zap } from 'lucide-react';
 import Button from '../ui/Button';
 
 const features = [
@@ -25,10 +26,16 @@ export default function Hero({ onGetStarted }) {
           and let AI inpainting restore the area — same dimensions, lossless PNG
           output.
         </p>
-        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
           <Button size="lg" onClick={onGetStarted}>
             Start removing
           </Button>
+          <Link to="/voice-generator" className="inline-flex">
+            <Button variant="secondary" size="lg" className="w-full sm:w-auto">
+              <Mic2 className="h-4 w-4" aria-hidden />
+              AI Voice Generator
+            </Button>
+          </Link>
           <Button variant="secondary" size="lg" onClick={() => document.getElementById('upload')?.scrollIntoView({ behavior: 'smooth' })}>
             Learn how it works
           </Button>

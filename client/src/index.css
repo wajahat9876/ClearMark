@@ -32,4 +32,49 @@
       transparent
     );
   }
+
+  .voice-ambient {
+    background:
+      radial-gradient(ellipse 60% 40% at 20% 0%, rgba(99, 102, 241, 0.2), transparent),
+      radial-gradient(ellipse 50% 30% at 80% 10%, rgba(168, 85, 247, 0.15), transparent);
+  }
+
+  .voice-panel {
+    box-shadow:
+      0 4px 24px rgba(0, 0, 0, 0.25),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .voice-card-selected {
+    background: linear-gradient(
+      135deg,
+      rgba(99, 102, 241, 0.12),
+      rgba(168, 85, 247, 0.08)
+    );
+  }
+
+  .voice-generate-btn {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .voice-range {
+    @apply h-2 cursor-pointer appearance-none rounded-full bg-surface-border/80;
+  }
+
+  .voice-range::-webkit-slider-thumb {
+    @apply h-4 w-4 appearance-none rounded-full bg-accent shadow-md shadow-indigo-500/40;
+  }
+
+  html.light body {
+    @apply bg-slate-50 text-slate-900;
+  }
+
+  html.light .glass {
+    @apply border-slate-200/80 bg-white/80 text-slate-900;
+  }
+
+  html.light .voice-page {
+    @apply text-slate-900;
+  }
 }

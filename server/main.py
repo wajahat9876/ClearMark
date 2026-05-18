@@ -4,29 +4,47 @@ from __future__ import annotations
 
 import io
 import logging
-
 from contextlib import asynccontextmanager
+
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
+from pydantic import BaseModel, Field
 from PIL import Image
 
 from inpaint_service import InpaintService
+from tts_service import TTSService
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 service: InpaintService | None = None
+tts_service: TTSService | None = None
+
+
+class TTSGenerateBody(BaseModel):
+    text: str = Field(..., min_length=1, max_length=2000)
+    voiceId: str = "woman"
+    speed: float = Field(1.0, ge=0.5, le=2.0)
+    pitch: float = Field(1.0, ge=0.7, le=1.4)
+    emotion: str = "calm"
+    language: str = "en-US"
+    aiEnhancement: bool = False
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    global service
+    global service, tts_service
     service = InpaintService()
     service.start_background_load()
+    tts_service = TTSService()
     logger.info("API ready — model loading in background.")
     yield
     service = None
+    tts_service = None
 
 
 app = FastAPI(
@@ -111,4 +129,51 @@ async def inpaint(
         raise
     except Exception as exc:
         logger.exception("Inpainting failed")
+        raise HTTPException(status_code=500, detail=str(exc)) from exc
+
+
+@app.get("/api/tts/health")
+@app.get("/tts/health")
+async def tts_health():
+    if tts_service is None:
+        return {"status": "starting", "configured": False, "provider": "edge"}
+
+    return {
+        "status": "ok",
+        "configured": tts_service.is_configured,
+        "provider": tts_service.provider,
+        "free": tts_service.uses_free_tier,
+        "edge_tts_min_version": "7.2.7",
+    }
+
+
+@app.post("/api/tts/generate")
+@app.post("/tts/generate")
+async def tts_generate(body: TTSGenerateBody):
+    if tts_service is None:
+        raise HTTPException(status_code=503, detail="Server is starting up.")
+
+    try:
+        audio_bytes, media_type = await tts_service.synthesize(
+            text=body.text,
+            voice_id=body.voiceId,
+            speed=body.speed,
+            pitch=body.pitch,
+            emotion=body.emotion,
+            language=body.language,
+            ai_enhancement=body.aiEnhancement,
+        )
+        return Response(
+            content=audio_bytes,
+            media_type=media_type,
+            headers={
+                "Content-Disposition": 'attachment; filename="voice.mp3"',
+            },
+        )
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except Exception as exc:
+        logger.exception("TTS generation failed")
         raise HTTPException(status_code=500, detail=str(exc)) from exc
