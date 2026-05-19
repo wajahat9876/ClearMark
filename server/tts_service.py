@@ -27,6 +27,7 @@ GTTS_LANGUAGE: dict[str, tuple[str, str]] = {
     "it-IT": ("it", "it"),
     "pt-BR": ("pt", "com.br"),
     "ja-JP": ("ja", "co.jp"),
+    "ur-PK": ("ur", "com.pk"),
 }
 
 VOICE_PROFILES: dict[str, dict[str, Any]] = {
@@ -61,6 +62,21 @@ EDGE_LANGUAGE_VOICES: dict[str, str] = {
     "it-IT": "it-IT-ElsaNeural",
     "pt-BR": "pt-BR-FranciscaNeural",
     "ja-JP": "ja-JP-NanamiNeural",
+    "ur-PK": "ur-PK-UzmaNeural",
+}
+
+# Per-style voices when a language has male/female neural options
+EDGE_VOICES_BY_LANG_AND_STYLE: dict[str, dict[str, str]] = {
+    "ur-PK": {
+        "baby": "ur-PK-UzmaNeural",
+        "boy": "ur-PK-AsadNeural",
+        "girl": "ur-PK-UzmaNeural",
+        "man": "ur-PK-AsadNeural",
+        "woman": "ur-PK-UzmaNeural",
+        "old_man": "ur-PK-AsadNeural",
+        "old_woman": "ur-PK-UzmaNeural",
+        "robot": "ur-PK-AsadNeural",
+    },
 }
 
 EMOTION_RATE_OFFSET: dict[str, float] = {
@@ -88,6 +104,7 @@ LANGUAGE_HINTS: dict[str, str] = {
     "it-IT": "Speak in Italian. ",
     "pt-BR": "Speak in Brazilian Portuguese. ",
     "ja-JP": "Speak in Japanese. ",
+    "ur-PK": "Speak in Pakistani Urdu. ",
 }
 
 
@@ -283,8 +300,11 @@ class TTSService:
 
         style = EDGE_VOICE_BY_STYLE.get(voice_id, EDGE_VOICE_BY_STYLE["woman"])
         lang_voice = EDGE_LANGUAGE_VOICES.get(language)
+        lang_styles = EDGE_VOICES_BY_LANG_AND_STYLE.get(language, {})
 
-        if language != "en-US" and lang_voice:
+        if voice_id in lang_styles:
+            voice = lang_styles[voice_id]
+        elif language != "en-US" and lang_voice:
             voice = lang_voice
         else:
             voice = style["voice"]

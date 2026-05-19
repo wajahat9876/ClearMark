@@ -78,6 +78,7 @@ export const LANGUAGES: { id: LanguageId; label: string }[] = [
   { id: 'it-IT', label: 'Italian' },
   { id: 'pt-BR', label: 'Portuguese (BR)' },
   { id: 'ja-JP', label: 'Japanese' },
+  { id: 'ur-PK', label: 'Urdu (Pakistan)' },
 ];
 
 export const HISTORY_STORAGE_KEY = 'clearmark-voice-history-v1';

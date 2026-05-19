@@ -18,7 +18,8 @@ export type LanguageId =
   | 'de-DE'
   | 'it-IT'
   | 'pt-BR'
-  | 'ja-JP';
+  | 'ja-JP'
+  | 'ur-PK';
 
 export interface VoiceOption {
   id: VoiceId;
