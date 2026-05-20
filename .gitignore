@@ -22,3 +22,6 @@ pyvenv.cfg/
 
 # macOS
 .DS_Store
+
+# AI model weights (downloaded on first use)
+server/weights/

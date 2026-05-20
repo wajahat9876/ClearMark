@@ -6,6 +6,15 @@ import HomePage from './HomePage';
 const VoiceGeneratorScreen = lazy(
   () => import('./features/voice/screens/VoiceGeneratorScreen')
 );
+const VideoEnhanceScreen = lazy(
+  () => import('./features/video/screens/VideoEnhanceScreen')
+);
+const VoiceStudioScreen = lazy(
+  () => import('./features/voice-studio/screens/VoiceStudioScreen')
+);
+const VideoGeneratorScreen = lazy(
+  () => import('./features/video-generator/screens/VideoGeneratorScreen')
+);
 
 function PageLoader() {
   return (
@@ -23,6 +32,9 @@ export default function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/voice-generator" element={<VoiceGeneratorScreen />} />
+            <Route path="/video-enhance" element={<VideoEnhanceScreen />} />
+            <Route path="/voice-studio" element={<VoiceStudioScreen />} />
+            <Route path="/video-generator" element={<VideoGeneratorScreen />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>

@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
         '/api': {
           target: `http://localhost:${apiPort}`,
           changeOrigin: true,
-          timeout: 300000,
+          timeout: 600000,
         },
       },
     },

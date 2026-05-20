@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mic2, Sparkles } from 'lucide-react';
+import { Clapperboard, Film, Mic2, Sparkles, Wand2 } from 'lucide-react';
 
 export default function Header() {
   return (
@@ -17,6 +17,18 @@ export default function Header() {
           <Link to="/voice-generator" className="inline-flex items-center gap-1.5 transition hover:text-white">
             <Mic2 className="h-3.5 w-3.5" />
             AI Voice
+          </Link>
+          <Link to="/voice-studio" className="inline-flex items-center gap-1.5 transition hover:text-white">
+            <Wand2 className="h-3.5 w-3.5" />
+            Voice Studio
+          </Link>
+          <Link to="/video-enhance" className="inline-flex items-center gap-1.5 transition hover:text-white">
+            <Film className="h-3.5 w-3.5" />
+            Video Enhance
+          </Link>
+          <Link to="/video-generator" className="inline-flex items-center gap-1.5 transition hover:text-white">
+            <Clapperboard className="h-3.5 w-3.5" />
+            AI Video Generator
           </Link>
           <a href="#upload" className="transition hover:text-white">
             Upload
